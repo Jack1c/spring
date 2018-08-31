@@ -16,6 +16,8 @@
 
 package org.springframework.aop.config;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -37,8 +39,13 @@ import org.springframework.beans.factory.xml.ParserContext;
  */
 class AspectJAutoProxyBeanDefinitionParser implements BeanDefinitionParser {
 
+	protected static final Log logger = LogFactory.getLog(AspectJAutoProxyBeanDefinitionParser.class);
+
 	@Override
 	public BeanDefinition parse(Element element, ParserContext parserContext) {
+		if (logger.isDebugEnabled()){
+			logger.debug("使用 annotation 配置aop");
+		}
 		//注册 AspectJAnnotationAutoProxyCreator
 		AopNamespaceUtils.registerAspectJAnnotationAutoProxyCreatorIfNecessary(parserContext, element);
 		extendBeanDefinition(element, parserContext);

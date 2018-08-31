@@ -90,10 +90,6 @@ public abstract class AopNamespaceUtils {
 		//对 proxy-target-class 和 expose-proxy 属性的处理
 		useClassProxyingIfNecessary(parserContext.getRegistry(), sourceElement);
 
-		if (logger.isDebugEnabled()){
-			logger.debug("对 proxy-target-class 和 expose-proxy 属性的处理");
-		}
-
 		//注册组件通知,
 		registerComponentIfNecessary(beanDefinition, parserContext);
 	}
@@ -115,6 +111,9 @@ public abstract class AopNamespaceUtils {
 		if (beanDefinition != null) {
 			BeanComponentDefinition componentDefinition =
 					new BeanComponentDefinition(beanDefinition, AopConfigUtils.AUTO_PROXY_CREATOR_BEAN_NAME);
+			if (logger.isDebugEnabled()){
+				logger.debug("注册组件 name : " + AopConfigUtils.AUTO_PROXY_CREATOR_BEAN_NAME);
+			}
 			parserContext.registerComponent(componentDefinition);
 		}
 	}

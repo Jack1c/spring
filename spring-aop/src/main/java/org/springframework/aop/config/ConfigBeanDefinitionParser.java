@@ -19,6 +19,8 @@ package org.springframework.aop.config;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -94,9 +96,16 @@ class ConfigBeanDefinitionParser implements BeanDefinitionParser {
 
 	private ParseState parseState = new ParseState();
 
+	protected static final Log logger = LogFactory.getLog(ConfigBeanDefinitionParser.class);
+
+
 
 	@Override
 	public BeanDefinition parse(Element element, ParserContext parserContext) {
+		if (logger.isDebugEnabled()){
+			logger.debug("使用 aop-config 配置aop");
+		}
+
 		CompositeComponentDefinition compositeDef =
 				new CompositeComponentDefinition(element.getTagName(), parserContext.extractSource(element));
 		parserContext.pushContainingComponent(compositeDef);
@@ -128,6 +137,7 @@ class ConfigBeanDefinitionParser implements BeanDefinitionParser {
 	 * @see AopNamespaceUtils
 	 */
 	private void configureAutoProxyCreator(ParserContext parserContext, Element element) {
+
 		AopNamespaceUtils.registerAspectJAutoProxyCreatorIfNecessary(parserContext, element);
 	}
 

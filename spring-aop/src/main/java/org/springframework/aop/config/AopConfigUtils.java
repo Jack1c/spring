@@ -19,6 +19,8 @@ package org.springframework.aop.config;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator;
 import org.springframework.aop.aspectj.autoproxy.AspectJAwareAdvisorAutoProxyCreator;
 import org.springframework.aop.framework.autoproxy.InfrastructureAdvisorAutoProxyCreator;
@@ -65,6 +67,8 @@ public abstract class AopConfigUtils {
 		APC_PRIORITY_LIST.add(AnnotationAwareAspectJAutoProxyCreator.class);
 	}
 
+	protected static final Log logger = LogFactory.getLog(AopConfigUtils.class);
+
 
 	public static BeanDefinition registerAutoProxyCreatorIfNecessary(BeanDefinitionRegistry registry) {
 		return registerAutoProxyCreatorIfNecessary(registry, null);
@@ -87,6 +91,7 @@ public abstract class AopConfigUtils {
 	}
 
 	public static BeanDefinition registerAspectJAnnotationAutoProxyCreatorIfNecessary(BeanDefinitionRegistry registry, Object source) {
+
 		return registerOrEscalateApcAsRequired(AnnotationAwareAspectJAutoProxyCreator.class, registry, source);
 	}
 
@@ -121,6 +126,10 @@ public abstract class AopConfigUtils {
 			}
 			//如果是一样的对象 则不需要创建
 			return null;
+		}
+
+		if (logger.isDebugEnabled()){
+			logger.debug( " aop 解析处理创建beanDefinition name:" +  AUTO_PROXY_CREATOR_BEAN_NAME + " class :" + cls.getSimpleName());
 		}
 
 		//创建  beanDefinition
