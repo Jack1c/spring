@@ -1,0 +1,26 @@
+plugins {
+    id 'java'
+}
+
+group 'org.springframework'
+version '4.3.18.RELEASE'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'junit', name: 'junit', version: '4.12'
+    compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.8.9'
+    compile group: 'commons-logging', name: 'commons-logging', version: '1.2'
+    testCompile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.25'
+    compile project(":spring-aop")
+    compile project(":spring-core")
+    compile project(":spring-context")
+    compile project(":spring-beans")
+    compile project(":spring-beans-groovy")
+
+
+}
