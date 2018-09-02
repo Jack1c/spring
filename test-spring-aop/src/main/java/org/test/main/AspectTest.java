@@ -26,7 +26,7 @@ public class AspectTest {
     }
 
 
-    //@After(POINT_CUT)
+    @After(POINT_CUT)
     public void afterTest() {
         System.out.println("after test");
     }
