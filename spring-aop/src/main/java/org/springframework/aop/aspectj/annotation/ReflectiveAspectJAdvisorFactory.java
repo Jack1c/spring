@@ -249,6 +249,7 @@ public class ReflectiveAspectJAdvisorFactory extends AbstractAspectJAdvisorFacto
 
         // If we get here, we know we have an AspectJ method.
         // Check that it's an AspectJ-annotated class
+        //检查是不是 Aspect注解
         if (!isAspect(candidateAspectClass)) {
             throw new AopConfigException("Advice must be declared inside an aspect type: " +
                     "Offending method '" + candidateAdviceMethod + "' in class [" +
@@ -261,6 +262,7 @@ public class ReflectiveAspectJAdvisorFactory extends AbstractAspectJAdvisorFacto
 
         AbstractAspectJAdvice springAdvice;
 
+        //根据不同的注解,创建不同的 Advice
         switch (aspectJAnnotation.getAnnotationType()) {
             case AtBefore:
                 springAdvice = new AspectJMethodBeforeAdvice(

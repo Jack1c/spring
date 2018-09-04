@@ -19,7 +19,10 @@ package org.springframework.aop.framework;
 import java.io.Serializable;
 import java.lang.reflect.Proxy;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.aop.SpringProxy;
+import org.springframework.aop.config.AopNamespaceUtils;
 
 /**
  * Default {@link AopProxyFactory} implementation, creating either a CGLIB proxy
@@ -46,20 +49,36 @@ import org.springframework.aop.SpringProxy;
 @SuppressWarnings("serial")
 public class DefaultAopProxyFactory implements AopProxyFactory, Serializable {
 
+	protected static final Log logger = LogFactory.getLog(DefaultAopProxyFactory.class);
+
+
+
 	@Override
 	public AopProxy createAopProxy(AdvisedSupport config) throws AopConfigException {
+		//判断使用 jdk代理还是 CGLIB代理
 		if (config.isOptimize() || config.isProxyTargetClass() || hasNoUserSuppliedProxyInterfaces(config)) {
 			Class<?> targetClass = config.getTargetClass();
 			if (targetClass == null) {
 				throw new AopConfigException("TargetSource cannot determine target class: " +
 						"Either an interface or a target is required for proxy creation.");
 			}
+
 			if (targetClass.isInterface() || Proxy.isProxyClass(targetClass)) {
+				if (logger.isDebugEnabled()){
+					logger.debug("使用 Jdk 动态代理");
+				}
 				return new JdkDynamicAopProxy(config);
+			}
+
+			if (logger.isDebugEnabled()){
+				logger.debug("使用 CGLIB 代理");
 			}
 			return new ObjenesisCglibAopProxy(config);
 		}
 		else {
+			if (logger.isDebugEnabled()){
+				logger.debug("使用 Jdk 动态代理");
+			}
 			return new JdkDynamicAopProxy(config);
 		}
 	}

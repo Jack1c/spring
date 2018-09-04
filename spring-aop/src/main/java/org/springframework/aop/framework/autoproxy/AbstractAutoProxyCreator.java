@@ -440,24 +440,33 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 		if (this.beanFactory instanceof ConfigurableListableBeanFactory) {
 			AutoProxyUtils.exposeTargetClass((ConfigurableListableBeanFactory) this.beanFactory, beanName, beanClass);
 		}
-
+		//创建代理工厂对象
 		ProxyFactory proxyFactory = new ProxyFactory();
+		//将对象的属性赋值到代理工厂中
 		proxyFactory.copyFrom(this);
 
+		//处理代理类的类型
 		if (!proxyFactory.isProxyTargetClass()) {
+			//检查被代理对象是否自定义了  <aop:scoped-proxy proxy-target-class="false"/> 并将 proxy-target-class 设置为true
 			if (shouldProxyTargetClass(beanClass, beanName)) {
 				proxyFactory.setProxyTargetClass(true);
 			}
 			else {
+				// 判断被代理的类是否实现了接口, 如果实现了接口将接口添加到ProxyFactory中, 否则设置 proxyTargetClass 属性为 true
 				evaluateProxyInterfaces(beanClass, proxyFactory);
 			}
 		}
 
 		Advisor[] advisors = buildAdvisors(beanName, specificInterceptors);
+		//将Advisor添加到ProxyFactory中去
 		proxyFactory.addAdvisors(advisors);
+		//proxyFactiory 设置被代理类
 		proxyFactory.setTargetSource(targetSource);
+
+		//自定义ProxyFactory
 		customizeProxyFactory(proxyFactory);
 
+		//代理过程被配置后是否还允许修改代理配置, 默认为false不允许修改
 		proxyFactory.setFrozen(this.freezeProxy);
 		if (advisorsPreFiltered()) {
 			proxyFactory.setPreFiltered(true);
