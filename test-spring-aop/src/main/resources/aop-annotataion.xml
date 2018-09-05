@@ -11,8 +11,7 @@
 
     <bean  id="userService" class="org.test.service.impl.UserServiceImpl" />
 
-    <bean id="roleService" class="org.test.service.impl.RoleServiceImpl" />
     <bean id="aspectTest" class="org.test.main.AspectTest" />
 
-    <aop:aspectj-autoproxy  proxy-target-class="false" />
+    <aop:aspectj-autoproxy  proxy-target-class="true" expose-proxy="true" />
 </beans>

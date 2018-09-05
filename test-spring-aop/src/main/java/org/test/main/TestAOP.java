@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.test.service.UserInterface;
+import org.test.service.impl.UserServiceImpl;
 
 public class TestAOP {
 
@@ -13,9 +14,8 @@ public class TestAOP {
 
     public void testAOPAnnotation() {
         ApplicationContext context = new ClassPathXmlApplicationContext("aop-annotataion.xml");
-        UserInterface userService = (UserInterface) context.getBean("userService");
+        UserServiceImpl userService = (UserServiceImpl) context.getBean("userService");
         userService.delete("001");
-        System.out.println(userService);
     }
 
 
@@ -23,6 +23,5 @@ public class TestAOP {
         ApplicationContext context = new ClassPathXmlApplicationContext("aop-xml.xml");
         UserInterface userService = (UserInterface) context.getBean("userService");
         userService.delete("001");
-        System.out.println(userService);
     }
 }

@@ -32,7 +32,7 @@ public class AspectTest {
     }
 
 
-    //@Around(POINT_CUT)
+    @Around(POINT_CUT)
     public Object arountTest(ProceedingJoinPoint joinPoint) {
         System.out.println("before1");
         Object object = null;

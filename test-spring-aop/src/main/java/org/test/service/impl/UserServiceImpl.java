@@ -5,7 +5,7 @@ import org.test.service.UserInterface;
 
 import java.util.List;
 
-public class UserServiceImpl implements UserInterface {
+public class UserServiceImpl  {
 
     public UserServiceImpl(){
         System.out.println("UserServiceImpl初始化");

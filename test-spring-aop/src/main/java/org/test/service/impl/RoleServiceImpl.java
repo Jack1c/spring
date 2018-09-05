@@ -21,6 +21,11 @@ public class RoleServiceImpl implements RoleInterface {
 
     }
 
+    public static String sayHello(String name){
+        System.out.println("hello");
+        return "hell : " + name;
+    }
+
     public void delete(String RoleId) {
         System.out.println("delete :" + RoleId);
 
